@@ -66,6 +66,15 @@
         .nav-link {
             color: white; 
         }
+        #main-content > div {
+            display: none;  /* Hide by default */
+        }
+
+        .nav-link.active {
+            background-color: #007bff !important; /* Change color as per your theme */
+            color: white !important;
+        }
+
     </style>
 </head>
 <body>
@@ -141,39 +150,40 @@
         <span class="fs-4">Unemployment in USA</span>
       </a>
       <hr>
-      <ul class="nav nav-pills flex-column mb-auto">
-        <li class="nav-item">
-          <a href="#overview-content" class="nav-link active" aria-current="page" onclick="showContent('overview-content', this)">
-            <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"/></svg>
-            Overview
-          </a>
-        </li>
-        <li>
-          <a href="#gender-content" class="nav-link text-white" onclick="showContent('gender-content', this)">
-            <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
-            Gender
-          </a>
-        </li>
-        <li>
-          <a href="#age-content" class="nav-link text-white" onclick="showContent('age-content', this)">
-            <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>
-            Age
-          </a>
-        </li>
-        <li>
-          <a href="#education-content" class="nav-link text-white" onclick="showContent('education-content', this)">
-            <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
-            Education
-          </a>
-        </li>
+        <ul class="nav nav-pills flex-column mb-auto">
+          <li class="nav-item">
+              <a href="#" class="nav-link active" aria-current="page" data-content="overview-content">
+                  <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"/></svg>
+                  Overview  
+              </a>
+          </li>
+          <li>
+              <a href="#" class="nav-link text-white" data-content="gender-content">
+                  <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
+                  Gender
+              </a>
+          </li>
+          <li>
+              <a href="#" class="nav-link text-white" data-content="age-content">
+                  <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>
+                  Age
+              </a>
+          </li>
+          <li>
+              <a href="#" class="nav-link text-white" data-content="education-content">
+                  <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
+                  Education
+              </a>
+          </li>
       </ul>
+    
       <hr>
       
     </div>
 
     <!-- Main Content Area -->
     <div class="container" id="main-content" style="color: black;">
-      <div id="overview-content">
+      <div id="overview-content"style="display: block;">
           <h2>Overview</h2>
           <p>This is the content for the Overview tab.</p>
       </div>
@@ -216,38 +226,44 @@
 
   <!-- JavaScript for content switching and updating active pill -->
   <script>
-    function showContent(contentId, clickedLink) {
-        
-        // Debugging: Log a message when the function is called
-        console.log('showContent called with contentId:', contentId);
+    function showContent(clickedLink) {
+    const contentId = clickedLink.getAttribute('data-content');
+    
+    console.log('showContent called with contentId:', contentId);
 
-        // Hide all content divs
-        const contentDivs = document.querySelectorAll('div[id$="-content"]');
-            contentDivs.forEach(div => {
-                div.style.display = 'none';
-            });
+    // Hide all content divs
+    const contentDivs = document.querySelectorAll('#main-content > div');
+        contentDivs.forEach(div => {
+            div.style.display = 'none';
+        });
         
-        // Debugging: Log the number of content divs found
         console.log('Number of content divs:', contentDivs.length);
 
         // Show the selected content
         const selectedContent = document.getElementById(contentId);
         selectedContent.style.display = 'block';
 
-        // Debugging: Log the selected content and its display style
         console.log('Selected content:', selectedContent);
         console.log('Selected content style.display:', selectedContent.style.display);
 
         // Remove the 'active' class from all pills
         const pills = document.querySelectorAll('.nav-link');
-          pills.forEach(pill => {
-              pill.classList.remove('active');
-          });
+        pills.forEach(pill => {
+            pill.classList.remove('active');
+        });
 
         // Add the 'active' class to the clicked pill
         clickedLink.classList.add('active');
-        
     }
+
+    // Adding event listeners
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', function(event) {
+            event.preventDefault();  // Prevent default behavior
+            showContent(this);
+        });
+    });
+
   </script>
 
 </body>
