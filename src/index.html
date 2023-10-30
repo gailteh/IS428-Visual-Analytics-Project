@@ -191,6 +191,24 @@
           <!-- Include your Tableau dashboard here -->
           <h2>Gender</h2>
           <p>Tableau dashboard content goes here.</p>
+          <div id="tableauViz"></div>
+              <script src="https://public.tableau.com/javascripts/api/tableau-2.min.js"></script>
+              <script>
+                  function initTableau() {
+                      var containerDiv = document.getElementById("tableauViz");
+                      var url = "https://public.tableau.com/views/Assignment1_16957790472830/COVIDinCalifonia?:language=en-US&publish=yes&:display_count=n&:origin=viz_share_link";
+
+                      var options = {
+                          hideTabs: true,
+                          width: "100%",
+                          height: "800px",
+                      };
+
+                      var viz = new tableau.Viz(containerDiv, url, options);
+                  }
+
+                  document.addEventListener("DOMContentLoaded", initTableau);
+              </script>
       </div>
       <div id="age-content" style="display: none;">
           <h2>Age</h2>
