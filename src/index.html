@@ -175,6 +175,7 @@
                                 <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>
                                 Age
                             </a>
+
                         </li>
                         <li>
                             <a href="#education-content" class="nav-link text-white" data-content="education-content">
@@ -209,6 +210,25 @@
                     <div id="age-content" style="display: none;">
                         <h2>Age</h2>
                         <p>This is the content for the Age tab.</p>
+                        <div id="tableauAgeViz"></div>
+                            <script src="https://public.tableau.com/javascripts/api/tableau-2.min.js"></script>
+                            <script>
+                                function initTableau() {
+                                    var containerDiv = document.getElementById("tableauAgeViz");
+                                    var url = "https://public.tableau.com/views/UnemploymentDataAge_16978648409790/UnemploymentRate-AgeGrp2?:language=en-US&:display_count=n&:origin=viz_share_link";
+                
+                                    var options = {
+                                        hideTabs: true,
+                                        width: "100%",
+                                        height: "1000px",
+                                    };
+                
+                                    var viz = new tableau.Viz(containerDiv, url, options);
+                                }
+                
+                                document.addEventListener("DOMContentLoaded", initTableau);
+                            </script>
+
                     </div>
                     <div id="education-content" style="display: none;">
                         <h2>Education</h2>
