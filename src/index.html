@@ -76,9 +76,8 @@
             background-color: #007bff !important; 
             color: white !important;
         }
-        .parent-container {
-            width: 1000px;
-            height: 800px;  /* Adjust the height as needed */
+        .tableau-container {
+            position: relative;
         }
         
     </style>
@@ -184,7 +183,6 @@
                             </a>
                         </li>
                     </ul>
-                    
                     <hr>
                 </div>
             </div>
@@ -193,7 +191,9 @@
                 <div class="container" id="main-content" style="color: black;">
                     <div id="overview-content"style="display: block;">
                         <h2>Overview</h2>
-                        <p>This is the content for the Overview tab.</p>
+                        <p>
+                            The issue of the labor force in the United States has been a subject of significant concern, and it's why our team has embarked on a journey of data visualization and analytics. Over the years, the U.S. labor market has faced various challenges, with critical turning points like the 2010 recession leaving a lasting impact. The recession resulted in a severe economic downturn, causing a surge in unemployment rates as businesses struggled and downsized their workforce. Millions of individuals found themselves without jobs, and this pivotal event reshaped the nation's labor landscape. Our mission is to provide valuable insights through visual analytics and visualization to help both experts and the public understand the complex dynamics of the labor force, including the effects of such critical events. By delving into the data, we aim to shed light on the evolving landscape of employment in the United States and inform discussions on how to address these challenges.
+                        </p>
                         <iframe width="100%" height="825" frameborder="0"
                             src="https://observablehq.com/embed/ac0d859f29261a83?cells=viewof+year%2Cchart"></iframe>
                     
@@ -255,14 +255,14 @@
                                     var options = {
                                         hideTabs: true,
                                         width: "100%",
-                                        height: "1300px",
+                                        height: "800px",
                                     };
                 
                                     var viz = new tableau.Viz(containerDiv, url, options);
                                 }
                 
                                 document.addEventListener("DOMContentLoaded", initTableau);
-                            </script>
+                            </script>                           
                         <h1>education is important</h1>
                         <p>
                             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sunt incidunt maiores repudiandae dolorum unde, architecto molestiae assumenda laboriosam sequi nihil magnam aspernatur harum ut placeat nam saepe ex, pariatur ipsam?
