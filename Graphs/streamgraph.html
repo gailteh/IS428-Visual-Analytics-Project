@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Stream Graph Example</title>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <!-- Ensure you include the correct version of D3; the code below is for version 6 -->
+    <style>
+      /* Add some basic styling */
+      body {
+        font: 10px sans-serif;
+      }
+
+      .axis path,
+      .axis line {
+        fill: none;
+        stroke: #000;
+        shape-rendering: crispEdges;
+      }
+
+      .browser {
+        fill: none;
+        stroke: #000;
+        stroke-width: 1.5px;
+      }
+    </style>
+</head>
+<body>
+    <script>
+      // Set the dimensions and margins of the graph
+      var margin = {top: 20, right: 80, bottom: 30, left: 50},
+          width = 960 - margin.left - margin.right,
+          height = 500 - margin.top - margin.bottom;
+
+      // SVG setup
+      var svg = d3.select("body").append("svg")
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      // Parse the date / time
+      var parseDate = d3.timeParse("%Y");
+
+      // Set up the scales
+      var xScale = d3.scaleTime().range([0, width]);
+      var yScale = d3.scaleLinear().range([height, 0]);
+      var color = d3.scaleOrdinal(d3.schemeCategory10);
+
+      // Define the axes
+      var xAxis = d3.axisBottom(xScale);
+      var yAxis = d3.axisLeft(yScale);
+
+      // Define the stack
+      var stack = d3.stack();
+
+      // Define the area
+      var area = d3.area()
+          .x(function(d, i) { return xScale(d.data.year); })
+          .y0(function(d) { return yScale(d[0]); })
+          .y1(function(d) { return yScale(d[1]); });
+
+      // Load the data
+      d3.csv("data.csv").then(function(data) {
+
+        // Convert numeric values from strings to numbers
+        data.forEach(function(d) {
+          d.year = parseDate(d.year);
+          for (var k in d) if (k !== "year") d[k] = +d[k];
+        });
+
+        // Stack the data
+        var keys = Object.keys(data[0]).filter(function(key) { return key !== "year"; });
+        color.domain(keys);
+        stack.keys(keys);
+
+        var layer = svg.selectAll(".layer")
+            .data(stack(data))
+          .enter().append("g")
+            .attr("class", "layer");
+
+        layer.append("path")
+            .attr("class", "area")
+            .style("fill", function(d) { return color(d.key); })
+            .attr("d", area);
+
+        // Add the X Axis
+        xScale.domain(d3.extent(data, function(d) { return d.year; }));
+        svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + height + ")")
+            .call(xAxis);
+
+        // Add the Y Axis
+        yScale.domain([0, d3.max(data, function(d) {
+          var sum = 0;
+          for (var k in keys) sum += d[keys[k]];
+          return sum;
+        })]);
+        svg.append("g")
+            .attr("class", "y axis")
+            .call(yAxis);
+      }).catch(function(error){
+          console.log("Error loading the CSV file: ", error);
+      });
+
+      layer.append("path")
+    .attr("class", "area")
+    .style("fill", function(d) { return color(d.key); })
+    .attr("d", function(d) {
+        // Log the data to see what is being passed to the area generator
+        console.log(d);
+        var pathD = area(d);
+        // Log the output of the area generator to see if it's correct
+        console.log(pathD);
+        return pathD;
+    });
+    </script>
+</body>
+</html>
