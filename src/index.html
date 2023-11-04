@@ -88,8 +88,13 @@
             padding: 20px; /* Add some padding for spacing */
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Shadow effect */
             border-radius: 10px; /* Rounded corners */
+            margin-bottom: 30px;
         }
-        
+        img{
+            height: 200px;
+            display: block; /* Ensures that margin: 0 auto; works */
+            margin: 0 auto; /* Centers the image horizontally */
+        }
     </style>
 </head>
 <body>
@@ -184,7 +189,7 @@
                                 <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>
                                 Age
                             </a>
-
+                            
                         </li>
                         <li>
                             <a href="#education-content" class="nav-link text-white" data-content="education-content">
@@ -204,10 +209,16 @@
                         <p>
                             The issue of the labor force in the United States has been a subject of significant concern, and it's why our team has embarked on a journey of data visualization and analytics. Over the years, the U.S. labor market has faced various challenges, with critical turning points like the 2010 recession leaving a lasting impact. The recession resulted in a severe economic downturn, causing a surge in unemployment rates as businesses struggled and downsized their workforce. Millions of individuals found themselves without jobs, and this pivotal event reshaped the nation's labor landscape. Our mission is to provide valuable insights through visual analytics and visualization to help both experts and the public understand the complex dynamics of the labor force, including the effects of such critical events. By delving into the data, we aim to shed light on the evolving landscape of employment in the United States and inform discussions on how to address these challenges.
                         </p>
+                        <img src="overview_img.jpg" alt="Homeless people">
+                        <hr>
+                        <h2>Temporal Evolution of Unemployment level</h2>
                         <iframe width="100%" height="825" frameborder="0"
                             src="https://observablehq.com/embed/ac0d859f29261a83?cells=viewof+year%2Cchart"></iframe>
                     
-                        <h1>heading</h1>
+                        <h2>What Happened?</h2>
+                        <p>
+                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Corporis porro ad incidunt, recusandae deserunt illum animi temporibus! Consectetur quia ut est error amet, rerum eos, velit neque quaerat iusto laudantium.
+                        </p>
                     </div>
                     <div id="gender-content" style="display: none;">
                         <!-- Include your Tableau dashboard here -->
@@ -219,7 +230,7 @@
                     </div>
                     <div id="age-content" style="display: none;">
                         <h2>Age</h2>
-                        <p>
+                        <p style="margin-bottom: 5px;">
                             Our team embarked on an in-depth exploration of age in relation to the labor force in the United States over the years for several compelling reasons. Visualizing age-related data plays a significant role in shedding light on various aspects of the labor market and societal dynamics.
                             <br><br>
                             First and foremost, age is a critical factor when analyzing labor force trends. It has a profound impact on employment, retirement, and workforce composition. By dissecting age-related data and representing it through graphs and visualizations, we gain a nuanced understanding of the workforce's demographic structure and its evolution. 
@@ -230,6 +241,8 @@
                             <br><br>
                             In summary, our focus on age-related labor force data is driven by its significance in understanding demographic shifts, the potential presence of age discrimination, and the broader dynamics that affect individuals' participation in the workforce. By visualizing this data, we aim to contribute to informed discussions and promote policies that create a fair and inclusive labor market for all age groups.
                         </p>
+                        <img style="height: 250px;" src="age_img.jpg" alt="people queuing">
+                        <hr>
                         <div id="tableauAgeChart1"></div>
                         <div id="tableauAgeChart2"></div>
                         <div id="tableauAgeChart3" style="position: relative;"></div>
