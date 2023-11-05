@@ -4,11 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>US Workforce Trends</title>
-    <!-- Include Bootstrap CSS and JS 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Include Bootstrap CSS and JS -->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/js/bootstrap.bundle.min.js"></script>  -->
 
-    -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"/>
     <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/sidebars/">
     <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
@@ -579,24 +578,56 @@
                     <div id="education-content" style="display: none;">
                         <h2>Education</h2>
                         <p>This is the content for the Education tab.</p>
-                        <div id="tableauViz2"></div>
-                            <script src="https://public.tableau.com/javascripts/api/tableau-2.min.js"></script>
-                            <script>
-                                function initTableau() {
-                                    var containerDiv = document.getElementById("tableauViz2");
-                                    var url = "https://public.tableau.com/views/education_overview_dashboard_testing/education_overview2?:language=en-GB&publish=yes&:display_count=n&:origin=viz_share_link";
-                
-                                    var options = {
-                                        hideTabs: true,
-                                        width: "100%",
-                                        height: "800px",
-                                    };
-                
-                                    var viz = new tableau.Viz(containerDiv, url, options);
-                                }
-                
-                                document.addEventListener("DOMContentLoaded", initTableau);
-                            </script>                           
+                        <div>
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                  <a class="nav-link active" id="eduOverview-tab" data-bs-toggle="tab" href="#eduOverview" role="tab" aria-controls="eduOverview" aria-selected="true">Overview</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                  <a class="nav-link" id="eduAttain-tab" data-bs-toggle="tab" href="#eduAttain" role="tab" aria-controls="eduAttain" aria-selected="false">by Education Attainment</a>
+                                </li>
+                            </ul>
+                              
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active" id="eduOverview" role="tabpanel" aria-labelledby="eduOverview-tab">
+                                    <div id="edu-overview"></div>
+                                    <p>Explanation</p>
+                                </div>
+                                <div class="tab-pane fade" id="eduAttain" role="tabpanel" aria-labelledby="eduAttain-tab">
+                                  <div id="edu-attain"></div>
+                                  <p>Explanation</p>
+                                </div>
+                            </div>
+                                <script src="https://public.tableau.com/javascripts/api/tableau-2.min.js"></script>
+                                <script>
+                                    function initTableauEdu1() {
+                                        var containerDiv = document.getElementById("edu-overview");
+                                        var url = "https://public.tableau.com/views/UnemploymentDataAge_16978648409790/UnemploymentRateacrossMonthsfilterbyyear?:language=en-US&:display_count=n&:origin=viz_share_link";
+                                        var options = {
+                                            hideTabs: true,
+                                            width: "100%",
+                                            height: "600px",
+                                        };
+                    
+                                        var viz = new tableau.Viz(containerDiv, url, options);
+                                    }
+
+                                    function initTableauEdu2() {
+                                        var containerDiv = document.getElementById("edu-attain");
+                                        var url = "https://public.tableau.com/views/UnemploymentDataAge_16978648409790/UnemploymentRateHighlightTable?:language=en-US&:display_count=n&:origin=viz_share_link";
+                                        var options = {
+                                            hideTabs: true,
+                                            width: "100%",
+                                            height: "500px",
+                                        };
+                    
+                                        var viz = new tableau.Viz(containerDiv, url, options);
+                                    }
+                                    
+                                    document.addEventListener("DOMContentLoaded", initTableauEdu1);
+                                    document.addEventListener("DOMContentLoaded", initTableauEdu2);
+                                </script>
+                        </div>             
                         <h1>Education is Important</h1>
                         <p>
                             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sunt incidunt maiores repudiandae dolorum unde, architecto molestiae assumenda laboriosam sequi nihil magnam aspernatur harum ut placeat nam saepe ex, pariatur ipsam?
@@ -629,47 +660,49 @@
               </script>
   -->
 
-  <!-- JavaScript for content switching and updating active pill -->
-  <script>
-    function showContent(clickedLink) {
-    const contentId = clickedLink.getAttribute('data-content');
-    
-    console.log('showContent called with contentId:', contentId);
-
-    // Hide all content divs
-    const contentDivs = document.querySelectorAll('#main-content > div');
-        contentDivs.forEach(div => {
-            div.style.display = 'none';
-        });
+    <!-- Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <!-- JavaScript for content switching and updating active pill -->
+    <script>
+        function showContent(clickedLink) {
+        const contentId = clickedLink.getAttribute('data-content');
         
-        console.log('Number of content divs:', contentDivs.length);
+        console.log('showContent called with contentId:', contentId);
 
-        // Show the selected content
-        const selectedContent = document.getElementById(contentId);
-        selectedContent.style.display = 'block';
+        // Hide all content divs
+        const contentDivs = document.querySelectorAll('#main-content > div');
+            contentDivs.forEach(div => {
+                div.style.display = 'none';
+            });
+            
+            console.log('Number of content divs:', contentDivs.length);
 
-        console.log('Selected content:', selectedContent);
-        console.log('Selected content style.display:', selectedContent.style.display);
+            // Show the selected content
+            const selectedContent = document.getElementById(contentId);
+            selectedContent.style.display = 'block';
 
-        // Remove the 'active' class from all pills
-        const pills = document.querySelectorAll('.nav-link');
-        pills.forEach(pill => {
-            pill.classList.remove('active');
+            console.log('Selected content:', selectedContent);
+            console.log('Selected content style.display:', selectedContent.style.display);
+
+            // Remove the 'active' class from all pills
+            const pills = document.querySelectorAll('.nav-link');
+            pills.forEach(pill => {
+                pill.classList.remove('active');
+            });
+
+            // Add the 'active' class to the clicked pill
+            clickedLink.classList.add('active');
+        }
+
+        // Adding event listeners
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(event) {
+                event.preventDefault();  // Prevent default behavior
+                showContent(this);
+            });
         });
 
-        // Add the 'active' class to the clicked pill
-        clickedLink.classList.add('active');
-    }
-
-    // Adding event listeners
-    document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', function(event) {
-            event.preventDefault();  // Prevent default behavior
-            showContent(this);
-        });
-    });
-
-  </script>
+    </script>
 
 </body>
 </html>
