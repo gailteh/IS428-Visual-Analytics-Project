@@ -7,7 +7,7 @@
 </head>
 <body>
     <script>
-        d3.csv("Merged_Unemployment_Level_And_Rate.csv").then(data => {
+        d3.csv("Data/Processed/Gender Processed/Merged_Unemployment_Level_And_Rate.csv").then(data => {
             data.forEach(d => {
                 d.parsedDate = parseDate(d.yearAndMonth);
                 d["Unemployment Rate (in percentage)"] = +d["Unemployment Rate (in percentage)"]; // Ensure unemployment rate is a number
@@ -16,7 +16,13 @@
         });
 
         function parseDate(yearAndMonth) {
-            return new Date(yearAndMonth + "-01"); // Just add the day component
+            console.log(yearAndMonth);
+            try {
+                return d3.timeParse("%Y-%m-%d")(yearAndMonth + "-01"); // Just add the day component
+            } catch (e) {
+                console.log(e);
+            }
+
         }
 
         const dateFormatter = d3.timeFormat("%Y-%m");
@@ -87,7 +93,7 @@
                 .attr("text-anchor", "middle")
                 .attr("fill", "black")
                 .attr("font-weight", "bold")
-                .text("Year and Month");
+                
 
             let currentIndex = visibleRows;
 
