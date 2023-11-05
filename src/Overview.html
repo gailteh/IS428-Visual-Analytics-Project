@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Auto-Scrolling Bar Chart</title>
+    <script src="https://d3js.org/d3.v7.min.js" charset="utf-8"></script>
+</head>
+<body>
+    <script>
+        d3.csv("Merged_Unemployment_Level_And_Rate.csv").then(data => {
+            data.forEach(d => {
+                d.parsedDate = parseDate(d.yearAndMonth);
+                d["Unemployment Rate (in percentage)"] = +d["Unemployment Rate (in percentage)"]; // Ensure unemployment rate is a number
+            });
+            initialize(data);
+        });
+
+        function parseDate(yearAndMonth) {
+            return new Date(yearAndMonth + "-01"); // Just add the day component
+        }
+
+        const dateFormatter = d3.timeFormat("%Y-%m");
+
+        function initialize(data) {
+            const width = 1000;
+            const rowHeight = 30;
+            const visibleRows = 20;
+            const margin = { top: 20, right: 20, bottom: 50, left: 150 };
+            const barPadding = 5;
+            const duration = 1000;
+
+            const x = d3.scaleLinear()
+                .domain([0, d3.max(data, d => d["Unemployment Rate (in percentage)"])])
+                .range([margin.left, width - margin.right]);
+
+            const y = d3.scaleBand()
+                .range([margin.top, margin.top + rowHeight * visibleRows])
+                .padding(0.1);
+
+            const svg = d3.select("body")
+                .append("svg")
+                .attr("width", width)
+                .attr("height", rowHeight * visibleRows + margin.top + margin.bottom)
+                .attr("viewBox", [0, 0, width, rowHeight * visibleRows + margin.top + margin.bottom])
+                .attr("style", "max-width: 100%; height: auto;");
+
+            y.domain(data.slice(0, visibleRows).map(d => d.parsedDate));
+
+            svg.selectAll("rect")
+                .data(data.slice(0, visibleRows))
+                .enter()
+                .append("rect")
+                .attr("x", margin.left)
+                .attr("y", d => y(d.parsedDate))
+                .attr("width", d => x(d["Unemployment Rate (in percentage)"]) - margin.left)
+                .attr("height", y.bandwidth() - barPadding)
+                .attr("fill", "steelblue");
+
+            svg.selectAll(".label")
+                .data(data.slice(0, visibleRows))
+                .enter()
+                .append("text")
+                .attr("class", "label")
+                .text(d => dateFormatter(d.parsedDate))
+                .attr("x", margin.left - 5)
+                .attr("y", d => y(d.parsedDate) + y.bandwidth() / 2)
+                .attr("dy", "0.35em")
+                .attr("text-anchor", "end")
+                .attr("fill", "black")
+                .attr("font-weight", "bold");
+
+            svg.append("g")
+                .attr("transform", `translate(0, ${rowHeight * visibleRows + margin.top})`)
+                .call(d3.axisBottom(x))
+                .append("text")
+                .attr("x", width / 2)
+                .attr("y", 40)
+                .attr("text-anchor", "middle")
+                .attr("fill", "black")
+                .attr("font-weight", "bold")
+                .text("Unemployment Rate (in percentage)");
+
+            svg.append("text")
+                .attr("x", -(rowHeight * visibleRows + margin.top) / 2)
+                .attr("y", margin.left - 10)
+                .attr("transform", "rotate(-90)")
+                .attr("text-anchor", "middle")
+                .attr("fill", "black")
+                .attr("font-weight", "bold")
+                .text("Year and Month");
+
+            let currentIndex = visibleRows;
+
+            // function autoScroll() {
+            //     y.domain(data.slice(currentIndex - visibleRows + 1, currentIndex + 1).map(d => d.parsedDate));
+
+            //     const bars = svg.selectAll("rect").data(data.slice(currentIndex - visibleRows + 1, currentIndex + 1), d => d.parsedDate);
+            //     const labels = svg.selectAll(".label").data(data.slice(currentIndex - visibleRows + 1, currentIndex + 1), d => d.parsedDate);
+
+            //     bars.transition().duration(duration).attr("y", d => y(d.parsedDate));
+            //     labels.transition().duration(duration).attr("y", d => y(d.parsedDate) + y.bandwidth() / 2);
+
+            //     bars.exit().remove();
+            //     labels.exit().remove();
+
+            //     if (currentIndex < data.length) {
+            //         const nextDatum = data[currentIndex];
+            //         if (nextDatum) {
+            //             svg.append("rect")
+            //                 .attr("x", margin.left)
+            //                 .attr("y", y(nextDatum.parsedDate))
+            //                 .attr("width", x(nextDatum["Unemployment Rate (in percentage)"]) - margin.left)
+            //                 .attr("height", y.bandwidth() - barPadding)
+            //                 .attr("fill", "steelblue");
+
+            //             svg.append("text")
+            //                 .attr("class", "label")
+            //                 .text(dateFormatter(nextDatum.parsedDate))
+            //                 .attr("x", margin.left - 5)
+            //                 .attr("y", y(nextDatum.parsedDate) + y.bandwidth() / 2)
+            //                 .attr("dy", "0.35em")
+            //                 .attr("text-anchor", "end")
+            //                 .attr("fill", "black")
+            //                 .attr("font-weight", "bold");
+            //         }
+            //         currentIndex++;
+            //     } else {
+            //         currentIndex = visibleRows;
+            //     }
+
+            //     setTimeout(autoScroll, duration);
+            // }
+            function autoScroll() {
+    // Check if data slice is valid
+    const currentDataSlice = data.slice(currentIndex - visibleRows + 1, currentIndex + 1);
+    if (!currentDataSlice.length) {
+        return; // Exit if no data is present
+    }
+
+    y.domain(currentDataSlice.map(d => d.parsedDate));
+
+    const bars = svg.selectAll("rect").data(currentDataSlice, d => d.parsedDate);
+    const labels = svg.selectAll(".label").data(currentDataSlice, d => d.parsedDate);
+
+    bars.transition().duration(duration).attr("y", d => y(d.parsedDate));
+    labels.transition().duration(duration).attr("y", d => y(d.parsedDate) + y.bandwidth() / 2);
+
+    bars.exit().remove();
+    labels.exit().remove();
+
+    if (currentIndex < data.length) {
+        const nextDatum = data[currentIndex];
+        if (nextDatum && nextDatum.parsedDate) {
+            svg.append("rect")
+                .attr("x", margin.left)
+                .attr("y", y(nextDatum.parsedDate))
+                .attr("width", x(nextDatum["Unemployment Rate (in percentage)"]) - margin.left)
+                .attr("height", y.bandwidth() - barPadding)
+                .attr("fill", "steelblue");
+
+            svg.append("text")
+                .attr("class", "label")
+                .text(dateFormatter(nextDatum.parsedDate))
+                .attr("x", margin.left - 5)
+                .attr("y", y(nextDatum.parsedDate) + y.bandwidth() / 2)
+                .attr("dy", "0.35em")
+                .attr("text-anchor", "end")
+                .attr("fill", "black")
+                .attr("font-weight", "bold");
+        }
+        currentIndex++;
+    } else {
+        currentIndex = visibleRows;
+    }
+
+    setTimeout(autoScroll, duration);
+}
+
+
+            setTimeout(autoScroll, duration);
+        }
+    </script>
+</body>
+</html>
