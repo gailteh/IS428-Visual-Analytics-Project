@@ -4,11 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>US Workforce Trends</title>
-    <!-- Include Bootstrap CSS and JS 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Include Bootstrap CSS and JS -->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/js/bootstrap.bundle.min.js"></script>  -->
 
-    -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"/>
     <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/sidebars/">
     <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
@@ -94,6 +93,9 @@
             height: 200px;
             display: block; /* Ensures that margin: 0 auto; works */
             margin: 0 auto; /* Centers the image horizontally */
+        }
+        #eduOverview-tab.nav-link.active #eduAttain-tab.nav-link {
+            color: black;
         }
     </style>
 </head>
@@ -578,29 +580,78 @@
                     </div>
                     <div id="education-content" style="display: none;">
                         <h2>Education</h2>
-                        <p>This is the content for the Education tab.</p>
-                        <div id="tableauViz2"></div>
+                        <p>
+                            We are delving into the relationship between an individual's educational history and their experience with unemployment. This investigation seeks 
+                            to uncover patterns and trends regarding how various levels of education, from high school diplomas to advanced degrees, influence employment opportunities and job security.
+                            Through the insights gained from visualising unemployment data categorized by educational attainments, we aimed to derive a conclusion about the relationship
+                            between unemployment rate and one's education attainment.
+                        </p>
+                        <h3>Unemployment rate by Education Attainment</h3>
+                        <div id="edu-attain" style="padding: 2%;"></div>
+                        <p>
+                            From the above multi-line chart, we can see that those who owns a certificate less than high school diploma experience
+                            the highest average annual unemployment rate of all time, followed by High School Graduates and those owning a College or Associate's Degree.
+                            
+                        </p>
+                        <h3>Rate of Change in Unemployment Rate across Years</h3>
+                        <div id="edu-roc" style="padding: 2%;"></div>
+                        <p>
+                            Though we know that people with a certification less than High School Diploma has the highest average annual unemployment rate, we want to know about how the unemployment rate 
+                            varies across the years, did . From the above graph illustrating the rate of changes in average annual unemployment rate, we can see that the width of the area representing people with 
+                            educational attainment of less than High School diploma is 
+                            <br><br>
+                            The rate of change is obtained by using the previous year as the basis for calculation to see how much has the unemployment range changes after a year.
+                        </p>   
+                        <h3>Unemployment rate component by Years</h3>
+                        <div id="edu-treemap" style="padding: 2%;"></div>
+                        <p>
+                            The animated treemap show us the change in average annual unemployment rate in US from 1993 to 2023. The size of the graph changes
+                            with the average unemployment rate. While most of the years show relatively small portion, there are years that have a large size that
+                            covers most of the canva, which are 2009, 
+                        </p>    
+                        
                             <script src="https://public.tableau.com/javascripts/api/tableau-2.min.js"></script>
                             <script>
-                                function initTableau() {
-                                    var containerDiv = document.getElementById("tableauViz2");
-                                    var url = "https://public.tableau.com/views/education_overview_dashboard_testing/education_overview2?:language=en-GB&publish=yes&:display_count=n&:origin=viz_share_link";
-                
+
+                                function initTableauEdu2() {
+                                    var containerDiv = document.getElementById("edu-attain");
+                                    var url = "https://public.tableau.com/views/education_overview_dashboard_testing/Line-UnemploymentRatebyEducationattainment";
                                     var options = {
                                         hideTabs: true,
                                         width: "100%",
-                                        height: "800px",
+                                        height: "500px",
                                     };
                 
                                     var viz = new tableau.Viz(containerDiv, url, options);
                                 }
+
+                                function initTableauEdu3() {
+                                    var containerDiv = document.getElementById("edu-treemap");
+                                    var url = "https://public.tableau.com/views/education_overview_dashboard_testing/TreemapUnemploymentratebyeducationalattainment";
+                                    var options = {
+                                        hideTabs: true,
+                                        width: "100%",
+                                        height: "500px",
+                                    };
                 
-                                document.addEventListener("DOMContentLoaded", initTableau);
-                            </script>                           
-                        <h1>Education is Important</h1>
-                        <p>
-                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sunt incidunt maiores repudiandae dolorum unde, architecto molestiae assumenda laboriosam sequi nihil magnam aspernatur harum ut placeat nam saepe ex, pariatur ipsam?
-                        </p>
+                                    var viz = new tableau.Viz(containerDiv, url, options);
+                                }
+                                function initTableauEdu4() {
+                                    var containerDiv = document.getElementById("edu-roc");
+                                    var url = "https://public.tableau.com/views/education_overview_dashboard_testing/RateofChangeinUnemploymentRateacrossYears?:language=en-GB&publish=yes&:display_count=n&:origin=viz_share_link";
+                                    var options = {
+                                        hideTabs: true,
+                                        width: "100%",
+                                        height: "500px",
+                                    };
+                
+                                    var viz = new tableau.Viz(containerDiv, url, options);
+                                }
+                                
+                                document.addEventListener("DOMContentLoaded", initTableauEdu2);
+                                document.addEventListener("DOMContentLoaded", initTableauEdu3);
+                                document.addEventListener("DOMContentLoaded", initTableauEdu4);
+                            </script>
                     </div>
                 </div>
             </div>
@@ -629,47 +680,49 @@
               </script>
   -->
 
-  <!-- JavaScript for content switching and updating active pill -->
-  <script>
-    function showContent(clickedLink) {
-    const contentId = clickedLink.getAttribute('data-content');
-    
-    console.log('showContent called with contentId:', contentId);
-
-    // Hide all content divs
-    const contentDivs = document.querySelectorAll('#main-content > div');
-        contentDivs.forEach(div => {
-            div.style.display = 'none';
-        });
+    <!-- Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- JavaScript for content switching and updating active pill -->
+    <script>
+        function showContent(clickedLink) {
+        const contentId = clickedLink.getAttribute('data-content');
         
-        console.log('Number of content divs:', contentDivs.length);
+        console.log('showContent called with contentId:', contentId);
 
-        // Show the selected content
-        const selectedContent = document.getElementById(contentId);
-        selectedContent.style.display = 'block';
+        // Hide all content divs
+        const contentDivs = document.querySelectorAll('#main-content > div');
+            contentDivs.forEach(div => {
+                div.style.display = 'none';
+            });
+            
+            console.log('Number of content divs:', contentDivs.length);
 
-        console.log('Selected content:', selectedContent);
-        console.log('Selected content style.display:', selectedContent.style.display);
+            // Show the selected content
+            const selectedContent = document.getElementById(contentId);
+            selectedContent.style.display = 'block';
 
-        // Remove the 'active' class from all pills
-        const pills = document.querySelectorAll('.nav-link');
-        pills.forEach(pill => {
-            pill.classList.remove('active');
+            console.log('Selected content:', selectedContent);
+            console.log('Selected content style.display:', selectedContent.style.display);
+
+            // Remove the 'active' class from all pills
+            const pills = document.querySelectorAll('.nav-link');
+            pills.forEach(pill => {
+                pill.classList.remove('active');
+            });
+
+            // Add the 'active' class to the clicked pill
+            clickedLink.classList.add('active');
+        }
+
+        // Adding event listeners
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(event) {
+                event.preventDefault();  // Prevent default behavior
+                showContent(this);
+            });
         });
 
-        // Add the 'active' class to the clicked pill
-        clickedLink.classList.add('active');
-    }
-
-    // Adding event listeners
-    document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', function(event) {
-            event.preventDefault();  // Prevent default behavior
-            showContent(this);
-        });
-    });
-
-  </script>
+    </script>
 
 </body>
 </html>
