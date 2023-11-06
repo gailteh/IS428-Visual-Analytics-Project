@@ -96,42 +96,47 @@
             margin: 0 auto; /* Centers the image horizontally */
         }
         .card-container {
-        display: flex;
-        justify-content: space-around;
-        padding: 2%;
+            display: flex;
+            justify-content: space-around;
+            padding: 2%;
         }
         .card {
-        width: 400px;
-        height: 300px;
-        perspective: 1000px;
+            width: 400px;
+            height: 300px;
+            perspective: 1000px;
         }
         .card-inner {
-        width: 100%;
-        height: 100%;
-        transform-style: preserve-3d;
-        transition: transform 0.5s;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
         }
         .card:hover .card-inner {
-        transform: rotateY(180deg);
+            transform: rotateY(180deg);
         }
         .card-front,
         .card-back {
-        width: 100%;
-        height: 100%;
-        backface-visibility: hidden;
-        position: absolute;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        padding: 2%;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2%;
+            color: aliceblue;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            
         }
         .card-front {
-        background-color: #3498db;
+            background-color: #4682B4;
+            
         }
         .card-back {
-        background-color: #e74c3c;
-        transform: rotateY(180deg);
+            background-color: #464BB4;
+            transform: rotateY(180deg);
+            font-size: 20px;
         }
     </style>
 </head>
@@ -249,7 +254,8 @@
                         </p>
                         <img src="overview_img.jpg" alt="Homeless people">
                         <hr>
-                        <h2>Key Notes</h2>
+                        <!-- KEY POINTS CARDS SECTION-->
+                        <h2>Key Points</h2>
                         <div class="container">
                             <div class="card-container">
                               <div class="card">
@@ -272,13 +278,13 @@
                                     <h3>Age</h3>
                                   </div>
                                   <div class="card-back">
-                                    Do you know...
+                                    Did you know...
                                     <br>
                                     The younger you are...
                                     <br>
-                                    The MORE you're unemployed
+                                    The higher chances of you being unemployed
                                     <br><br>
-                                    Click on the Age section to know more
+                                    Click on the Age section to find out more
                                   </div>
                                 </div>
                               </div>
