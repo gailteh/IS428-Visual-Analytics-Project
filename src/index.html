@@ -233,9 +233,64 @@
                         <!-- Include your Tableau dashboard here -->
                         <h2>Gender</h2>
                         <p>Tableau dashboard content goes here.</p>
-                            
-                            
-                            
+                        <div class="row">
+                            <div class="col" style="position:relative"><div id="tableauGenderViz2"></div></div>
+                        </div>
+                        <div class="row">
+                            <div class="" style="position:relative"><div id="tableauGenderViz"></div></div>
+                        </div>
+                        <div class="row">
+                            <div class="col" style="position:relative"><div id="tableauGenderViz3"></div>
+                        </div>
+                            <script src="https://public.tableau.com/javascripts/api/tableau-2.min.js"></script>
+                            <script>
+                                function initTableau() {
+                                    var containerDiv = document.getElementById("tableauGenderViz");
+                                    var url = "https://public.tableau.com/views/GenderTableauTiara/EmploymentRateinUSA1969-2023?:language=en-US&publish=yes&:display_count=n&:origin=viz_share_link";
+                
+                                    var options = {
+                                        hideTabs: true,
+                                        width: "100%",
+                                        height: "700px",
+                                    };
+                
+                                    var viz = new tableau.Viz(containerDiv, url, options);
+                                }
+                
+                                document.addEventListener("DOMContentLoaded", initTableau);
+
+                                function initTableau2() {
+                                    var containerDiv = document.getElementById("tableauGenderViz2");
+                                    var url = "https://public.tableau.com/views/GenderTableauTiara/UnemploymentRateinUSA1969-2023?:language=en-US&publish=yes&:display_count=n&:origin=viz_share_link";
+                
+                                    var options = {
+                                        hideTabs: true,
+                                        width: "100%",
+                                        height: "500px",
+        
+                                    };
+                
+                                    var viz = new tableau.Viz(containerDiv, url, options);
+                                }
+                
+                                document.addEventListener("DOMContentLoaded", initTableau2);
+
+                                function initTableau3() {
+                                    var containerDiv = document.getElementById("tableauGenderViz3");
+                                    var url = "https://public.tableau.com/views/GenderTableauTiara/EmploymentvsUnemploymentbyGender?:language=en-US&publish=yes&:display_count=n&:origin=viz_share_link";
+                
+                                    var options = {
+                                        hideTabs: true,
+                                        width: "600px",
+                                        height: "700px",
+                                    };
+                
+                                    var viz = new tableau.Viz(containerDiv, url, options);
+                                }
+                
+                                document.addEventListener("DOMContentLoaded", initTableau3);
+                            </script>
+         
                     </div>
                     <div id="age-content" style="display: none;">
                         <h2>Age</h2>
