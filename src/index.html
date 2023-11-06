@@ -95,8 +95,43 @@
             display: block; /* Ensures that margin: 0 auto; works */
             margin: 0 auto; /* Centers the image horizontally */
         }
-        #eduOverview-tab.nav-link.active #eduAttain-tab.nav-link {
-            color: black;
+        .card-container {
+        display: flex;
+        justify-content: space-around;
+        padding: 2%;
+        }
+        .card {
+        width: 400px;
+        height: 300px;
+        perspective: 1000px;
+        }
+        .card-inner {
+        width: 100%;
+        height: 100%;
+        transform-style: preserve-3d;
+        transition: transform 0.5s;
+        }
+        .card:hover .card-inner {
+        transform: rotateY(180deg);
+        }
+        .card-front,
+        .card-back {
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 2%;
+        }
+        .card-front {
+        background-color: #3498db;
+        }
+        .card-back {
+        background-color: #e74c3c;
+        transform: rotateY(180deg);
         }
     </style>
 </head>
@@ -214,8 +249,56 @@
                         </p>
                         <img src="overview_img.jpg" alt="Homeless people">
                         <hr>
-                        
+                        <h2>Key Notes</h2>
+                        <div class="container">
+                            <div class="card-container">
+                              <div class="card">
+                                <div class="card-inner">
+                                  <div class="card-front">
+                                    <h3>Gender</h3>
+                                  </div>
+                                  <div class="card-back">
+                                    Who do you think is more UNEMPLOYED? 
+                                    <br>
+                                    Male VS Female
+                                    <br><br>
+                                    Click on the Gender Section to reveal the answer
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="card">
+                                <div class="card-inner">
+                                  <div class="card-front">
+                                    <h3>Age</h3>
+                                  </div>
+                                  <div class="card-back">
+                                    Do you know...
+                                    <br>
+                                    The younger you are...
+                                    <br>
+                                    The MORE you're unemployed
+                                    <br><br>
+                                    Click on the Age section to know more
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="card">
+                                <div class="card-inner">
+                                  <div class="card-front">
+                                    <h3>Education</h3>
+                                  </div>
+                                  <div class="card-back">
+                                    Sometimes it's good to listen to Asian Parents...
+                                    <br><br>
+                                    Click on the Education section to reveal what this means
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                        <hr>
                         <!-- OVERVIEW UNEMPLOYMENT RATE THROUGH THE YEARS -->
+                        <h2>Scrolling chart</h2>
                         <div id="scrollingChart">
                             
                         </div>
