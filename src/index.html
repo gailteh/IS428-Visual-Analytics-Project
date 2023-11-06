@@ -402,7 +402,8 @@
                                 document.addEventListener("DOMContentLoaded", initTableau3);
                             </script>
                     </div>
-                    <div id="education-content" style="display: none;">
+                    <!-- <div id="education-content" style="display: none;"> -->
+                    <div id="education-content">
                         <h2>Education</h2>
                         <p>
                             We are delving into the relationship between an individual's educational history and their experience with unemployment. This investigation seeks 
@@ -413,16 +414,19 @@
                         <h3>Unemployment rate by Education Attainment</h3>
                         <div id="edu-attain" style="padding: 2%;"></div>
                         <p>
-                            From the above multi-line chart, we can see that those who owns a certificate less than high school diploma experience
-                            the highest average annual unemployment rate of all time, followed by High School Graduates and those owning a College or Associate's Degree.
-                            
+                            Based on the multi-line chart above, a clear pattern emerges when we examine the historical unemployment rates. Notably, the group with an educational qualification lower than high school diploma experience
+                            the highest average annual unemployment rate of all time, followed by High School Graduates and those owning a College or Associate's Degree. The data reinforces the challenges faced by the group with limited 
+                            formal education, as shown in the chart where they consistently maintained the highest rates of unemployment.
+                            <br><br>
+                            The chart highlights the disparities in unemployment rates based on educational attainment but also emphasizes the importance of education in achieving greater employment stability and economic security. It 
+                            underscores the potential benefits of higher education in mitigating the impact of economic downturns and facilitating career opportunities.
                         </p>
                         <h3>Rate of Change in Unemployment Rate across Years</h3>
                         <div id="edu-roc" style="padding: 2%;"></div>
                         <p>
                             Though we know that people with a certification less than High School Diploma has the highest average annual unemployment rate, we want to know about how the unemployment rate 
-                            varies across the years, did . From the above graph illustrating the rate of changes in average annual unemployment rate, we can see that the width of the area representing people with 
-                            educational attainment of less than High School diploma is 
+                            varies across the years, did . From the above graph illustrating the rate of changes in average annual unemployment rate, we can see that the width of the stream representing people with 
+                            educational attainment of less than High School diploma is consistently the largest proportion. 
                             <br><br>
                             The rate of change is obtained by using the previous year as the basis for calculation to see how much has the unemployment range changes after a year.
                         </p>   
@@ -431,12 +435,14 @@
                         <p>
                             The animated treemap show us the change in average annual unemployment rate in US from 1993 to 2023. The size of the graph changes
                             with the average unemployment rate. While most of the years show relatively small portion, there are years that have a large size that
-                            covers most of the canva, which are 2009, 
+                            covers most of the canva, which are 2009, 2010 and 2020.
+                            <br><br>
+                            The stated years are known to be after major events such as 2008 Financial Crisis and 2019 Coronavirus pandemic. The major events have led to 
+                            massive layoffs and raised the unemployment rate of the following year(s).
+
                         </p>    
-                        
                             <script src="https://public.tableau.com/javascripts/api/tableau-2.min.js"></script>
                             <script>
-
                                 function initTableauEdu2() {
                                     var containerDiv = document.getElementById("edu-attain");
                                     var url = "https://public.tableau.com/views/education_overview_dashboard_testing/Line-UnemploymentRatebyEducationattainment";
