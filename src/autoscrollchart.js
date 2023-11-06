@@ -1,0 +1,238 @@
+
+                          // Load the CSV data
+                            
+                          let filename = "./datafiles/Merged_Unemployment_Level_and_Rate.csv"   
+                          d3.csv(filename).then(data => {
+                              data.forEach(d => {
+                                  // Split the year and month, then create a Date object
+                                  const [year, month] = d.yearAndMonth.split('-').map(num => parseInt(num, 10));
+                                  d.parsedDate = new Date(year, month - 1, 1); // JavaScript months are 0-indexed
+                                  // Convert the Unemployment Rate to a number
+                                  d["Unemployment Rate (in percentage)"] = +d["Unemployment Rate (in percentage)"];
+                              });
+                              initialize(data); // Call the initialize function with the processed data
+                          });
+                  
+                          // Define a dateFormatter function
+                          const dateFormatter = d3.timeFormat("%Y-%m");
+                  
+                          function initialize(data) {
+                              // Set up chart dimensions and scales
+                              const width = 1000;
+                              const rowHeight = 30;
+                              const visibleRows = 20;
+                              const margin = { top: 20, right: 20, bottom: 50, left: 150 };
+                              const barPadding = 5;
+                              const duration = 1000;
+                  
+                              // Define the x-scale
+                              const x = d3.scaleLinear()
+                                  .domain([0, d3.max(data, d => d["Unemployment Rate (in percentage)"])])
+                                  .range([margin.left, width - margin.right]);
+                  
+                              // Define the y-scale
+                              const y = d3.scaleBand()
+                                  .range([margin.top, margin.top + rowHeight * visibleRows])
+                                  .padding(0.1);
+                  
+                              // Create the SVG container
+                              const svg = d3.select("#scrollingChart")
+                                  .append("svg")
+                                  .attr("width", width)
+                                  .attr("height", rowHeight * visibleRows + margin.top + margin.bottom)
+                                  .attr("viewBox", [0, 0, width, rowHeight * visibleRows + margin.top + margin.bottom])
+                                  .attr("style", "max-width: 100%; height: auto; height: auto;");
+                  
+                              // Set the domain of the y-scale to the first set of data
+                              y.domain(data.slice(0, visibleRows).map(d => d.parsedDate));
+                  
+                              // Append bars to the SVG
+                              svg.selectAll("rect")
+                                  .data(data.slice(0, visibleRows))
+                                  .enter()
+                                  .append("rect")
+                                  .attr("x", margin.left)
+                                  .attr("y", d => y(d.parsedDate))
+                                  .attr("width", d => x(d["Unemployment Rate (in percentage)"]) - margin.left)
+                                  .attr("height", y.bandwidth() - barPadding)
+                                  .attr("fill", "steelblue");
+                  
+                              // Append labels to the bars
+                              svg.selectAll(".label")
+                                  .data(data.slice(0, visibleRows))
+                                  .enter()
+                                  .append("text")
+                                  .attr("class", "label")
+                                  .text(d => dateFormatter(d.parsedDate))
+                                  .attr("x", margin.left - 5)
+                                  .attr("y", d => y(d.parsedDate) + y.bandwidth() / 2)
+                                  .attr("dy", "0.35em")
+                                  .attr("text-anchor", "end")
+                                  .attr("fill", "black")
+                                  .attr("font-weight", "bold");
+                  
+                              // Append the x-axis to the SVG
+                              svg.append("g")
+                                  .attr("transform", `translate(0, ${rowHeight * visibleRows + margin.top})`)
+                                  .call(d3.axisBottom(x))
+                                  .append("text")
+                                  .attr("x", width / 2)
+                                  .attr("y", 40)
+                                  .attr("text-anchor", "middle")
+                                  .attr("fill", "black")
+                                  .attr("font-weight", "bold")
+                                  .text("Unemployment Rate (in percentage)");
+                  
+                              // Append the y-axis label to the SVG
+                              svg.append("text")
+                                  .attr("x", -(rowHeight * visibleRows + margin.top) / 2)
+                                  .attr("y", margin.left - 10)
+                                  .attr("transform", "rotate(-90)")
+                                  .attr("text-anchor", "middle")
+                                  .attr("fill", "black")
+                                  .attr("font-weight", "bold")
+                                  ;
+                  
+                              // Append initial rate labels next to each bar
+                              svg.selectAll(".rate-label")
+                                  .data(data.slice(0, visibleRows))
+                                  .enter()
+                                  .append("text")
+                                  .attr("class", "rate-label")
+                                  .text(d => d["Unemployment Rate (in percentage)"].toFixed(2) + "%") // Adjust this line to format the label text as needed
+                                  .attr("x", d => x(d["Unemployment Rate (in percentage)"]) + 5) // Start a bit after the end of the bar
+                                  .attr("y", d => y(d.parsedDate) + y.bandwidth() / 2)
+                                  .attr("dy", "0.35em")
+                                  .attr("fill", "black")
+                                  .attr("font-size", "0.8em"); // You can adjust the font size as needed
+                  
+                              // Start the autoScroll after a delay
+                              setTimeout(autoScroll, duration);
+                  
+                              // Define the autoScroll function
+                              function autoScroll() {
+                                  
+                                  // Assume 'dataIndex' is the index of the current top element of the data that's being shown
+                                  var dataIndex = 0;
+                  
+                                  // The function that will be called each time a scroll needs to happen
+                                  var scroll = function() {
+                                      // Increment data index to "scroll" to the next item
+                                      dataIndex++;
+                  
+                                      // Stop if we've reached the end of the data
+                                      if (dataIndex + visibleRows > data.length) {
+                                          console.log("No more data to show.");
+                                          return;
+                                      }
+                  
+                                      // Update the y-domain for the new data range
+                                      y.domain(data.slice(dataIndex, dataIndex + visibleRows).map(d => d.parsedDate));
+                  
+                                      // BIND: Select all bars and bind the new data range
+                                      var bars = svg.selectAll("rect")
+                                                  .data(data.slice(dataIndex, dataIndex + visibleRows), d => d.parsedDate);
+                  
+                                      // EXIT: Remove old bars not needed anymore
+                                      bars.exit()
+                                          .transition()
+                                          .duration(duration)
+                                          .ease(d3.easeLinear)
+                                          .attr("y", y.range()[0] - y.bandwidth())
+                                          .remove();
+                  
+                                      // UPDATE: Update existing bars
+                                      bars.transition()
+                                          .duration(duration)
+                                          .ease(d3.easeLinear)
+                                          .attr("y", d => y(d.parsedDate))
+                                          .attr("width", d => x(d["Unemployment Rate (in percentage)"]) - margin.left);
+                  
+                                      // ENTER: Add new bars entering from the bottom
+                                      bars.enter().append("rect")
+                                          .attr("x", margin.left)
+                                          .attr("y", y.range()[1])
+                                          .attr("width", d => x(d["Unemployment Rate (in percentage)"]) - margin.left)
+                                          .attr("height", y.bandwidth() - barPadding)
+                                          .attr("fill", "steelblue")
+                                          .transition()
+                                          .duration(duration)
+                                          .ease(d3.easeLinear)
+                                          .attr("y", d => y(d.parsedDate));
+                  
+                                      // Repeat the same process for the labels
+                                      var labels = svg.selectAll(".label")
+                                                      .data(data.slice(dataIndex, dataIndex + visibleRows), d => d.parsedDate);
+                  
+                                      labels.exit()
+                                          .transition()
+                                          .duration(duration)
+                                          .ease(d3.easeLinear)
+                                          .attr("y", y.range()[0] - y.bandwidth())
+                                          .remove();
+                  
+                                      labels.transition()
+                                          .duration(duration)
+                                          .ease(d3.easeLinear)
+                                          .attr("y", d => y(d.parsedDate) + y.bandwidth() / 2);
+                  
+                                      labels.enter().append("text")
+                                          .attr("class", "label")
+                                          .text(d => dateFormatter(d.parsedDate))
+                                          .attr("x", margin.left - 5)
+                                          .attr("y", y.range()[1])
+                                          .attr("dy", "0.35em")
+                                          .attr("text-anchor", "end")
+                                          .attr("fill", "black")
+                                          .attr("font-weight", "bold")
+                                          .transition()
+                                          .duration(duration)
+                                          .ease(d3.easeLinear)
+                                          .attr("y", d => y(d.parsedDate) + y.bandwidth() / 2);
+                  
+                                      // Inside the autoScroll function's scroll function...
+                  
+                                          // Update the rate labels in the UPDATE section
+                                          var rateLabels = svg.selectAll(".rate-label")
+                                                              .data(data.slice(dataIndex, dataIndex + visibleRows), d => d.parsedDate);
+                  
+                                          // EXIT old rate labels
+                                          rateLabels.exit()
+                                                  .transition()
+                                                  .duration(duration)
+                                                  .ease(d3.easeLinear)
+                                                  .attr("y", -y.bandwidth()) // Move upwards to exit
+                                                  .remove();
+                  
+                                          // UPDATE existing rate labels
+                                          rateLabels.transition()
+                                                  .duration(duration)
+                                                  .ease(d3.easeLinear)
+                                                  .attr("y", d => y(d.parsedDate) + y.bandwidth() / 2)
+                                                  .attr("x", d => x(d["Unemployment Rate (in percentage)"]) + 5); // Make sure the labels follow the bars
+                  
+                                          // ENTER new rate labels
+                                          rateLabels.enter().append("text")
+                                                  .attr("class", "rate-label")
+                                                  .text(d => d["Unemployment Rate (in percentage)"].toFixed(2) + "%")
+                                                  .attr("x", d => x(d["Unemployment Rate (in percentage)"]) + 5) // Enter from the bottom
+                                                  .attr("y", y.range()[1] + y.bandwidth()) // Start just below the chart
+                                                  .attr("dy", "0.35em")
+                                                  .attr("fill", "black")
+                                                  .attr("font-size", "0.8em")
+                                                  .transition()
+                                                  .duration(duration)
+                                                  .ease(d3.easeLinear)
+                                                  .attr("y", d => y(d.parsedDate) + y.bandwidth() / 2); // End at the correct y position next to the bar
+                  
+                                                      };
+                  
+                                  // Start the scrolling process
+                                  scroll();
+                  
+                                  // Set the interval to repeat the scroll
+                                  var interval = setInterval(scroll, duration + 100); // Give some extra time for the transition to complete
+                              }
+                  
+                          }
+                      
