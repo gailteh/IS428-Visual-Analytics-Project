@@ -19,7 +19,7 @@
     <WindowsPersistSimpleIdentifiers />
     <ZoneBackgroundTransparency />
   </document-format-change-manifest>
-  <repository-location id='education_overview_dashboard_testing' path='/workbooks' revision='1.6' />
+  <repository-location id='education_overview_dashboard_testing' path='/workbooks' revision='1.8' />
   <preferences>
     <preference name='ui.encoding.shelf.height' value='24' />
     <preference name='ui.shelf.height' value='26' />
@@ -719,8 +719,8 @@
             <column caption='Education Attainment' datatype='string' name='[education_attainment]' role='dimension' type='nominal' />
             <column caption='Date' datatype='date' name='[month_year]' role='dimension' type='ordinal' />
             <column-instance column='[education_attainment]' derivation='None' name='[none:education_attainment:nk]' pivot='key' type='nominal' />
+            <column-instance column='[month_year]' derivation='Year-Trunc' name='[tyr:month_year:qk]' pivot='key' type='quantitative' />
             <column caption='Unemployment Rate' datatype='real' name='[unemployment_rate]' role='measure' type='quantitative' />
-            <column-instance column='[month_year]' derivation='Year' name='[yr:month_year:ok]' pivot='key' type='ordinal' />
           </datasource-dependencies>
           <filter class='categorical' column='[federated.0wzj0qy0esrocg14hoy6g0hok3q3].[none:education_attainment:nk]'>
             <groupfilter function='level-members' level='[none:education_attainment:nk]' user:ui-enumeration='all' user:ui-marker='enumerate' />
@@ -732,7 +732,7 @@
         </view>
         <style>
           <style-rule element='label'>
-            <format attr='text-orientation' field='[federated.0wzj0qy0esrocg14hoy6g0hok3q3].[yr:month_year:ok]' value='0' />
+            <format attr='text-orientation' field='[federated.0wzj0qy0esrocg14hoy6g0hok3q3].[tyr:month_year:qk]' value='-90' />
           </style-rule>
           <style-rule element='annotation'>
             <format attr='line-end' id='annotation_1' value='dot' />
@@ -763,7 +763,7 @@
           </pane>
         </panes>
         <rows>[federated.0wzj0qy0esrocg14hoy6g0hok3q3].[avg:unemployment_rate:qk]</rows>
-        <cols>[federated.0wzj0qy0esrocg14hoy6g0hok3q3].[yr:month_year:ok]</cols>
+        <cols>[federated.0wzj0qy0esrocg14hoy6g0hok3q3].[tyr:month_year:qk]</cols>
       </table>
       <simple-id uuid='{BC9291C0-1A89-45B9-92FC-C69430ABD4D4}' />
     </worksheet>
@@ -1565,8 +1565,8 @@ Average Annual Unemployment Rate: <]]></run>
         <devicelayout auto-generated='true' name='Phone'>
           <size maxheight='1250' minheight='1250' sizing-mode='vscroll' />
           <zones>
-            <zone h='100000' id='95' type-v2='layout-basic' w='100000' x='0' y='0'>
-              <zone h='97916' id='94' param='vert' type-v2='layout-flow' w='98828' x='586' y='1042'>
+            <zone h='100000' id='97' type-v2='layout-basic' w='100000' x='0' y='0'>
+              <zone h='97916' id='96' param='vert' type-v2='layout-flow' w='98828' x='586' y='1042'>
                 <zone h='5469' id='12' type-v2='title' w='72034' x='586' y='1042'>
                   <zone-style>
                     <format attr='border-color' value='#000000' />
@@ -1712,8 +1712,8 @@ Average Annual Unemployment Rate: <]]></run>
         <devicelayout auto-generated='true' name='Phone'>
           <size maxheight='700' minheight='700' sizing-mode='vscroll' />
           <zones>
-            <zone h='100000' id='40' type-v2='layout-basic' w='100000' x='0' y='0'>
-              <zone h='96800' id='39' param='vert' type-v2='layout-flow' w='97714' x='1143' y='1600'>
+            <zone h='100000' id='42' type-v2='layout-basic' w='100000' x='0' y='0'>
+              <zone h='96800' id='41' param='vert' type-v2='layout-flow' w='97714' x='1143' y='1600'>
                 <zone h='5554' id='9' type-v2='dashboard-object' w='48856' x='1143' y='1600'>
                   <button action='tabdoc:goto-sheet window-id=&quot;{04C12167-3D18-4811-8672-61D8A9E97441}&quot;' button-type='text'>
                     <button-visual-state>
@@ -1852,8 +1852,8 @@ Average Annual Unemployment Rate: <]]></run>
         <devicelayout auto-generated='true' name='Phone'>
           <size maxheight='700' minheight='700' sizing-mode='vscroll' />
           <zones>
-            <zone h='100000' id='45' type-v2='layout-basic' w='100000' x='0' y='0'>
-              <zone h='97334' id='44' param='vert' type-v2='layout-flow' w='98000' x='1000' y='1333'>
+            <zone h='100000' id='47' type-v2='layout-basic' w='100000' x='0' y='0'>
+              <zone h='97334' id='46' param='vert' type-v2='layout-flow' w='98000' x='1000' y='1333'>
                 <zone h='5337' id='12' type-v2='dashboard-object' w='48999' x='1000' y='1333'>
                   <button action='tabdoc:goto-sheet window-id=&quot;{04C12167-3D18-4811-8672-61D8A9E97441}&quot;' button-type='text'>
                     <button-visual-state>
