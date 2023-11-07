@@ -95,8 +95,48 @@
             display: block; /* Ensures that margin: 0 auto; works */
             margin: 0 auto; /* Centers the image horizontally */
         }
-        #eduOverview-tab.nav-link.active #eduAttain-tab.nav-link {
-            color: black;
+        .card-container {
+            display: flex;
+            justify-content: space-around;
+            padding: 2%;
+        }
+        .card {
+            width: 400px;
+            height: 300px;
+            perspective: 1000px;
+        }
+        .card-inner {
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+        }
+        .card:hover .card-inner {
+            transform: rotateY(180deg);
+        }
+        .card-front,
+        .card-back {
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 4%;
+            color: aliceblue;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            
+        }
+        .card-front {
+            background-color: #4682B4;
+            
+        }
+        .card-back {
+            background-color: #464BB4;
+            transform: rotateY(180deg);
+            font-size: 20px;
         }
     </style>
 </head>
@@ -214,35 +254,237 @@
                         </p>
                         <img src="overview_img.jpg" alt="Homeless people">
                         <hr>
-                        <h2>Temporal Evolution of Unemployment level</h2>
+                        <!-- KEY POINTS CARDS SECTION-->
+                        <h2>Key Points</h2>
+                        <div class="container">
+                            <div class="card-container">
+                              <div class="card">
+                                <div class="card-inner">
+                                  <div class="card-front">
+                                    <h3>Gender</h3>
+                                  </div>
+                                  <div class="card-back">
+                                    Who do you think is more UNEMPLOYED? 
+                                    <br>
+                                    Male VS Female
+                                    <br><br>
+                                    Click on the Gender Section to reveal the answer
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="card">
+                                <div class="card-inner">
+                                  <div class="card-front">
+                                    <h3>Age</h3>
+                                  </div>
+                                  <div class="card-back">
+                                    Did you know...
+                                    <br>
+                                    The younger you are...
+                                    <br>
+                                    The higher chances of you being unemployed
+                                    <br><br>
+                                    Click on the Age section to find out more
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="card">
+                                <div class="card-inner">
+                                  <div class="card-front">
+                                    <h3>Education</h3>
+                                  </div>
+                                  <div class="card-back">
+                                    Sometimes it's good to listen to Asian Parents...
+                                    <br><br>
+                                    Click on the Education section to reveal what this means
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <!-- OVERVIEW UNEMPLOYMENT RATE THROUGH THE YEARS -->
+                        <h2>Temporal Evolution of Unemployment Rate</h2>
+                        <h2>Scrolling chart</h2>
+                        <div id="scrollingChart"></div>
+                        <div id="scrubber"></div>
+                        <div id="playPause"></div>
+                        <h2></h2>
+                        <p>
+                            One of the major problems in the US labor force has to be the rising unemployment rate. Over time, we can see how unemployment rate increases in percentage since the 1970s by 1-3% up to today - which is a significant number considering how much population has been rising in the US over the years. This proves for a pressing need to investigate the reasons why the unemployment rates have been rising through time, thus, in this dashboard, we will be uncovering the possible reasons and factors why these numbers are so.
+                        </p>
+                        <hr>
+                        <h2>Timeline</h2>
+                        <img src="timeline_custom.png" alt="major historical events" style="width: 100%;height: 100%;">
+                        <h4>Key Historical Events</h4>
+                        <h5>How have significant economic events affected unemployment rates?</h5>
+                        <p>
+                            Key Historical Events from 1969 to 2023 that have impacted the U.S. economy and labor force market:
+                            <br><br>
+                            - 1969: The U.S. experiences the peak of the post-World War II economic boom.
+                            <br>
+                            - 1970: The 'Guns and Butter' policies contribute to inflation, leading to a recession.
+                            <br>
+                            - 1973-1975: An oil crisis induces stagflation, challenging the stability of the U.S. economy.
+                            <br>
+                            - 1980s: The early 1980s face The Iran and Volcker Recession, driven by geopolitical tensions and tight monetary policy.
+                            <br>
+                            - 1981-1982: The U.S. undergoes a 'double-dip' recession due to continued tight monetary policy to curb inflation.
+                            <br>
+                            - 1990-1991: The Gulf War contributes to a short-lived recession, characterized by a spike in oil prices and uncertainty.
+                            <br>
+                            - Late 1990s-2000: The dot-com bubble inflates the tech sector, leading to a burst in 2000 with significant job losses.
+                            <br>
+                            - 2003: The U.S. economy recovers from the burst of the dot-com bubble, the aftermath of the 9/11 attacks, and corporate scandals such as Enron.
+                            <br>
+                            - 2007-2009: The financial crisis triggers a severe global recession, resulting in increased unemployment rates.
+                            <br>
+                            - 2010: Unemployment remains high as an after-effect of the Financial Crisis.
+                            <br>
+                            - 2020-2022: The COVID-19 pandemic leads to a sharp economic contraction, causing unprecedented unemployment levels and instability.
+                            <br><br>
+                            These events represent a chronological sequence of major economic and labor market influences in the United States during this period.
+                        </p>
+                        <hr>
+                        
+                        
+                    </div>
+                    <div id="gender-content" style="display: none;" >
+                        <!-- Include your Tableau dashboard here -->
+                        <h2>Gender</h2>
+
+                        <p>Our team conducted a thorough analysis of gender roles within the U.S. labor force over time, recognizing that understanding the nuances of gender dynamics is key to comprehending the labor market and advocating for equitable policies. Visualizing gender data not only helps us grasp the division and disparities in workforce participation but also spotlights issues such as wage inequality and job segregation. This effort aims to highlight patterns of inequality and stimulate conversations that could lead to policy reforms for gender equality in the workplace.
+
+                            Moreover, by charting the progress and challenges women and other gender groups face, we can trace the impact of sociopolitical movements and legislation on gender equality in the labor market. Our visualization seeks to provide insights into the intersection of gender with economic and social trends, informing strategies that ensure an inclusive labor market where all genders have equal opportunities to thrive.
+
+                            <br><br>We aim to investigate the following through the Gender lens:
+                            <br>1. What are the historical trends in employment and unemployment rates for men and women over the last 5 decades?
+                            <br>2. How has the employment rate gap between men and women changed from 1969 to 2023?
+                            <br>3. Has the introduction of various gender equality policies been reflected in the employment rates of women compared to men?
+                            <br>4. Are there any notable inflection points in the employment trend data that could indicate the effectiveness of specific economic or social policies?
+                            <br>5. What was the impact of the COVID-19 pandemic on employment levels for both genders, and how did recovery patterns differ between men and women?
+                            <br>6. How does the pace of change in employment rates differ between men and women, and what might this indicate about the labor market's responsiveness to policy measures?
+
+
+
+
+
+
+                        </p>
+
+                        <img src="gender_img.jpg" alt="boys vs girls">
+                        <hr>
+                        
+                        <h2>Temporal Evolution of Employment level</h2>
                         <iframe width="100%" height="825" frameborder="0"
                             src="https://observablehq.com/embed/ac0d859f29261a83?cells=viewof+year%2Cchart"></iframe>
                     
-                        <h2>What Happened?</h2>
+                        <h4>Observations</h4>
                         <p>
-                            We can see how the gap between men and women through time decreases in size as well. This shows that the employment rate over the years has been significantly better for women, as compared to back then. This sheds light on the fact that gender equality has improved in society over time. 
+                            We can see how the gap between men and women through time decreases in size as well. This shows that the employment rate over the years has been significantly better for women, as compared to back then. This sheds light on the fact that gender equality has improved in society over time - and more people are willing to hire women at the same rate as men. The gap between women and men has decreased from 10,000 to around 3,000 throught time. The sharp drop in the COVID-19 pandemic in 2020-2021 has affected both genders equally with the rate affecting more men than women.
                         </p>
-                        <!-- OVERVIEW UNEMPLOYMENT RATE THROUGH THE YEARS -->
-                        <div id="scrollingChart">
-                            
+                        
+                        <div class="row">
+                            <div class="" style="position:relative"><div id="tableauGenderViz"></div></div>
                         </div>
-                        
-                        
+                        <h4>Observations</h4>
+                        <p>
+                            This chart tracks the average employment rates for men and women in the USA from 1969 to 2023. Notably, the employment rate for men starts off higher than for women, but over time, the rate for men shows a decreasing trend, while the rate for women increases, reflecting a significant change in gender dynamics in the workforce.
+
+                            A particularly noteworthy observation is the convergence of employment rates. In the early years of the chart, there is a wide gap between the genders, with the employment rate for women in 1969 at around 41% and for men at approximately 80%. However, as we approach 2023, the employment rates converge, with women's rates reaching just above 50% and men's rates declining to just below 70%. This suggests that more women have entered and remained in the workforce over the years, while the proportion of men has slightly decreased.
+
+                            By 2023, the gap between the employment rates of men and women has narrowed significantly compared to the starting point in 1969, pointing to a shift towards more gender balance in the labor market. However, men's employment rate still remains higher than women's in 2023, indicating that while the gap has lessened, it has not completely closed. The reasons behind these trends could be multiple, including economic changes, shifts in societal norms, and possibly increased educational and professional opportunities for women.
+                        </p>
+                        <hr>
+                        <div class="row">
+                            <div class="col" style="position:relative"><div id="tableauGenderViz2"></div></div>
+                        </div>
+                        <h4>Observations</h4>
+                        <p>
+                            This line graph presents the average unemployment rate in the United States from 1969 to 2023, differentiated by gender. For both men (blue line) and women (red line), the unemployment rate has fluctuated significantly over the decades, with noticeable peaks that may correspond to economic downturns or recessions. For example, sharp spikes around the early 1980s, 2009, and 2020 are visible, likely reflecting the economic impacts of the 1981-82 recession, the 2008 financial crisis, and the COVID-19 pandemic, respectively. While both genders show similar trends, there are periods where the unemployment rate for men is higher than for women, such as around 1980, 2009, and 2020, indicating that economic downturns may have differentially impacted male-dominated industries. Conversely, during other periods such as the mid-1970s and early 1990s, women's unemployment rates were higher or matched men's rates. As of the latest data point in 2023, unemployment rates for both genders appear to have stabilized at lower levels compared to the previous years, with the rate for women slightly lower than that for men.
+                            
+                            
+                        </p>
+                        <hr>
+                        <div class="row">
+                            <div class="col" style="position:relative"><div id="tableauGenderViz3"></div>
+                        </div>
+                        <h4>Observations</h4>
+                        <p>
+                            The scatter plot reveals a positive correlation between employment and unemployment levels for both men and women, indicating that increases in employment tend to coincide with rises in unemployment, a trend that suggests a growing labor force. Notably, the data points for men generally occupy higher values for both employment and unemployment compared to women, highlighting a gender disparity within the labor market. The spread of men's data points, especially at higher employment levels, suggests more variability in their unemployment rates, implying a potentially greater impact of economic conditions on men's employment status. The linear trend lines for both genders have a positive slope, with the men's slope being steeper, suggesting that changes in employment levels have a more pronounced effect on unemployment rates for men than for women. These patterns reflect complex gender-based dynamics in the labor force that could be influenced by a range of economic factors and labor market policies.
+                        </p>
+                        <hr>
+                            <script src="https://public.tableau.com/javascripts/api/tableau-2.min.js"></script>
+                            <script>
+                                function initTableau() {
+                                    var containerDiv = document.getElementById("tableauGenderViz");
+                                    var url = "https://public.tableau.com/views/GenderTableauTiara/EmploymentRateinUSA1969-2023?:language=en-US&publish=yes&:display_count=n&:origin=viz_share_link";
+                
+                                    var options = {
+                                        hideTabs: true,
+                                        width: "100%",
+                                        height: "700px",
+                                    };
+                
+                                    var viz = new tableau.Viz(containerDiv, url, options);
+                                }
+                
+                                document.addEventListener("DOMContentLoaded", initTableau);
+
+                                function initTableau2() {
+                                    var containerDiv = document.getElementById("tableauGenderViz2");
+                                    var url = "https://public.tableau.com/views/GenderTableauTiara/UnemploymentRateinUSA1969-2023?:language=en-US&publish=yes&:display_count=n&:origin=viz_share_link";
+                
+                                    var options = {
+                                        hideTabs: true,
+                                        width: "100%",
+                                        height: "500px",
+        
+                                    };
+                
+                                    var viz = new tableau.Viz(containerDiv, url, options);
+                                }
+                
+                                document.addEventListener("DOMContentLoaded", initTableau2);
+
+                                function initTableau3() {
+                                    var containerDiv = document.getElementById("tableauGenderViz3");
+                                    var url = "https://public.tableau.com/views/GenderTableauTiara/EmploymentvsUnemploymentbyGender?:language=en-US&publish=yes&:display_count=n&:origin=viz_share_link";
+                
+                                    var options = {
+                                        hideTabs: true,
+                                        width: "100%",
+                                        height: "800px",
+                                    };
+                
+                                    var viz = new tableau.Viz(containerDiv, url, options);
+                                }
+                
+                                document.addEventListener("DOMContentLoaded", initTableau3);
+                            </script>
+                            <!-- Article 1 -->
+                        <h4>What are the implications of bridging the gender employment gap, and what strategies can effectively narrow this disparity?</h4>
+                        <p>Goldman Sachs reports that narrowing the gender employment gap has the potential to increase global GDP by 6% by 2030, translating to an additional $5.3 trillion in the global economy. 
+                        <br>Contributing factors to the gender employment gap include disparate access to education, healthcare, and financial services, as well as entrenched social and cultural norms that constrain women's opportunities and life choices.
+                        <br>The article further outlines key policies and initiatives that could help close this gap, such as prioritizing investment in human capital, fostering female entrepreneurship, increasing labor market flexibility, and enhancing support for work-life balance.
+                        <br><a href="https://www.goldmansachs.com/intelligence/page/cutting-the-gender-employment-gap-could-boost-global-gdp-by-6-percent.html">Read More</a>
+                        </p>
+
+                        <!-- Article 2 -->
+                        <h4>How does the US government plan to reduce the gender employment gap?</h4>
+                        <p>
+                            The American Jobs Plan aims to enhance women's employment post-COVID-19, targeting job creation, infrastructure improvement, and increased economic competitiveness while addressing pay gaps, job segregation, caregiving, and discrimination. It will fund school and child care facility upgrades, care infrastructure, worker protections, union support, equitable workforce development, STEM opportunities, support for women-owned businesses, violence interventions, and affordable housing.
+                        <br><a href="https://www.whitehouse.gov/briefing-room/statements-releases/2021/04/21/fact-sheet-the-american-jobs-plan-will-support-womens-employment/">Read More</a>
+                        </p>
+         
                     </div>
-                    <div id="gender-content" style="display: none;">
-                        <!-- Include your Tableau dashboard here -->
-                        <h2>Gender</h2>
-                        <p>Tableau dashboard content goes here.</p>
-                            
-                            
-                            
-                    </div>
+                </div>
                     <div id="age-content" style="display: none;">
                         <h2>Age</h2>
                         <p style="margin-bottom: 5px;">
-                            Our team embarked on an in-depth exploration of age in relation to the labor force in the United States over the years for several compelling reasons. Visualizing age-related data plays a significant role in shedding light on various aspects of the labor market and societal dynamics.
+                            Our team embarked on an in-depth exploration of age in relation to the labor force in the United States over the years for several reasons. Visualizing age-related data plays a significant role in shedding light on various aspects of the labor market and societal dynamics.
                             <br><br>
-                            First and foremost, age is a critical factor when analyzing labor force trends. It has a profound impact on employment, retirement, and workforce composition. By dissecting age-related data and representing it through graphs and visualizations, we gain a nuanced understanding of the workforce's demographic structure and its evolution. 
+                            Firstly, age is a critical factor when analyzing labor force trends. It has a profound impact on employment, retirement, and workforce composition. By dissecting age-related data and representing it through graphs and visualizations, we gain a nuanced understanding of the workforce's demographic structure and its evolution. 
                             <br><br>
                             One of the crucial reasons to visualize age-related data is to uncover the possibility of age discrimination in the US labor market over the years. Age discrimination, whether in hiring, retention, or promotion, is a pertinent issue. By examining trends, patterns, and changes in the employment rates of different age groups, our visualizations aim to detect disparities or biases. 
                             This scrutiny can help highlight areas where discrimination might exist, encouraging informed discussions and potential policy changes to ensure equal opportunities for individuals of all ages.
@@ -250,7 +492,11 @@
                             Additionally, age-related data can reveal essential insights into workforce dynamics, such as retirement trends, labor force participation rates, and the influence of economic events, like recessions, on different age groups. We believe that by visualizing this data comprehensively, we can provide a comprehensive view of 
                             how age impacts the labor force, identify potential challenges, and propose strategies to address them.
                             <br><br>
-                            In summary, our focus on age-related labor force data is driven by its significance in understanding demographic shifts, the potential presence of age discrimination, and the broader dynamics that affect individuals' participation in the workforce. By visualizing this data, we aim to contribute to informed discussions and promote policies that create a fair and inclusive labor market for all age groups.
+                            In summary, we aim to investigate these questions:
+                            <br>1. What are the historical trends for unemployment across the last 5 decades for different age demographics?
+                            <br>2. What was the impact of notable events on the unemployment rate on the different age groups?
+                            <br>3. How does the rate of change of unemployment compare between the different age groups and what does this show about impact any policy changes on the labour market?
+                            
                         </p>
                         <img style="height: 250px;" src="age_img.jpg" alt="people queuing">
                         <hr>
@@ -263,47 +509,55 @@
                         <div id="tableauAgeChart1"></div>
                         <h4>Observations</h4>
                         <p>
-                            As we navigate through the mesmerizing animation, several compelling observations come to light. Firstly, a notable pattern emerges, revealing a persistent high unemployment rate within the 20-24 age group over the years. 
+                            Firstly, this chart reveals a persistent high unemployment rate within the 20-24 age group over the years. 
                             This highlights a consistent vulnerability within this particular age bracket, which warrants further exploration and attention. Additionally, a significant historical marker reveals itself in the year 2010, coinciding with the great recession. 
                             During this turbulent period, a palpable surge in unemployment rates resonated across all age groups, reflecting the widespread economic hardships faced by the nation.
                             <br><br>
                             Furthermore, as we fast forward to the unprecedented year of 2020, the visual storytelling takes an abrupt turn. The COVID-19 pandemic, a global disruptor of immense proportions, 
-                            manifests itself in a startling and sharp spike in unemployment rates. This increase stands unparalleled in the historical data, leaving an indelible mark on the trajectory of employment in the United States. 
+                            manifests itself in a startling and sharp spike in unemployment rates. This increase stands unparalleled in the historical data, leaving an inerasable mark on the trajectory of employment in the United States. 
                             The resilience and adaptability of various age groups in the face of these challenges become subjects of intrigue and investigation in our quest to understand the intricacies of the American labor landscape.
                         </p>
                         <hr>
-                        <h2>Heatmap</h2>
+                        <h2>Highlight Tables</h2>
                         <p>
-                            Now, let's shift our focus to a more detailed exploration of the employment landscape by delving into the fascinating world of heatmaps. Heatmaps serve as invaluable tools for discerning intricate trends and patterns over the years among diverse age groups. 
-                            The strength of a heatmap lies in its ability to visually represent complex data by color-coding, making trends and anomalies readily discernible. By using this innovative visualization, we can easily identify the ebb and flow of employment rates across age groups, revealing how different segments of the population have fared over the years. 
-                            Heatmaps empower us to extract deeper insights and discern subtle variations in employment dynamics, a crucial step in our quest to comprehend the multifaceted factors that shape employment trends in the United States.
+                            After examining the line chart depicting the trends in unemployment rates across various age groups over the years, we have transitioned our focus to highlight tables to gain a more granular understanding of this data. 
+                            The move to highlight tables is driven by the need to scrutinize the specific years and their corresponding unemployment rates for each age group. These tables allow us to delve deeper into the temporal aspects of the labor force dynamics, providing a clear and concise overview of the variations in unemployment across different demographic segments. 
+                            The strength of highlight tables lies in their ability to present data in a structured format that facilitates year-by-year comparisons, making it easier to identify patterns, anomalies, and changes over time. 
+                            By using these tables, we can pinpoint the exact moments when shifts in unemployment trends occurred within each age category, enabling a more comprehensive analysis of labor market dynamics.
                         </p>
                         <div id="tableauAgeChart2"></div>
                         <h4>Observations</h4>
                         <p>
-                            The heatmap we're about to explore stands as a powerful testament to the importance of the years 2010 and 2020 in the context of unemployment trends in the United States. As you navigate this colorful mosaic of data, you'll notice vibrant and distinct patterns emerging in these pivotal years. 
-                            The shade variations vividly represent the fluctuations in unemployment rates across different age groups, with darker hues signifying higher rates and lighter ones indicating lower levels of unemployment. 
-                            <br><br>
-                            To interpret the heatmap effectively, focus on the intensity of colors in these key years, paying special attention to the sharp shifts that characterize 2010, a period marked by economic turbulence, and 2020, an unparalleled time of crisis due to the COVID-19 pandemic. 
-                            By exploring this heatmap, you'll uncover not only the significance of these landmark years but also gain a profound understanding of the nuances and complexities that underpin the topic of unemployment across various age groups in the United States. 
-                            It's a visual journey that not only informs but also empowers, making the intricacies of employment trends accessible to all.
+                            The observations derived from the highlight tables have unveiled intriguing insights, notably the darkest shades representing the years 2010 and 2020. These deeply shaded cells signify periods of heightened unemployment rates within specific age groups. 
+                            What sets the highlight tables apart from the line chart is their ability to offer a more precise and immediate assessment of these crucial data points. In contrast to the line chart's broader trends, the tables facilitate a focused examination of specific years, enabling us to pinpoint the precise moments when unemployment rates reached their peak. 
+                            Such observations are pivotal in our study as they provide a nuanced perspective on the labor market dynamics. By honing in on these pivotal years, we can further investigate the underlying factors contributing to the increased unemployment and tailor more targeted policy responses. 
+                            These observations serve as pivotal guideposts, directing efforts toward understanding and addressing the specific challenges faced by different age groups during these critical periods.
                         </p>
                         <hr>
-                        <h2>Stream Graph</h2>
+                        <h2>Stream Graph - Rate of Change</h2>
                         <p>
                             To delve even deeper into the evolving dynamics of different age groups and their influence on employment trends, we now turn to the dynamic and insightful world of stream graphs. Stream graphs offer a comprehensive and visually engaging representation of how employment rates have evolved over the years among diverse age brackets. 
                             Their distinct strength lies in their ability to vividly illustrate the contribution of each age group to the overall pattern, 
                             showcasing the ebb and flow of employment in a single, cohesive visual narrative. 
-                            By using the interactive filters, you have the power to zoom in on specific details, facilitating a granular exploration of the data and allowing for precise analysis. Whether you're scrutinizing individual age group trajectories or seeking a broader perspective, stream graphs provide a multi-dimensional view, shedding light on the intricacies of employment trends. 
+                            By using the interactive filters, you can zoom in on specific details, facilitating a granular exploration of the data and allowing for precise analysis. Whether you're scrutinizing individual age group trajectories or seeking a broader perspective, stream graphs provide a multi-dimensional view, shedding light on the intricacies of employment trends. 
                             They are an indispensable tool in our quest to unravel the story behind the numbers, empowering you to derive comprehensive insights from this rich and dynamic data visualization.
                         </p>
                         <div id="tableauAgeChart3" style="position: relative;"></div>
                         <h4>Observations</h4>
                         <p>
-                            The stream graph paints a fascinating tapestry of employment trends, and upon closer examination, several intriguing observations come to the fore. Much like the heatmap, it accentuates the significance of the pivotal years, 2010 and 2020, displaying vivid fluctuations that mirror the nation's economic landscape. 
-                            However, what distinguishes the stream graph is its capacity to illustrate the interconnectedness of different age groups and their collective contribution to these trends. 
-                            It provides a holistic view, revealing how each demographic band has fared in the larger context. This is in contrast to the heatmap, which primarily highlights age-specific rates, and the line graph, which may not capture the intricacies of overlap between age groups. 
+                            The stream graph shows many interestig employment trends, and upon closer examination, several intriguing observations come about. Much like the highlight table, it accentuates the significance of the pivotal years, 2010 and 2020, displaying vivid fluctuations that mirror the nation's economic landscape. 
+                            However, what distinguishes the stream graph is its capacity to illustrate the interconnectedness of different age groups and their collective contribution to these trends. The thickness and intensity of stream graph streams provide a dynamic representation of the rate of change. 
+                            It provides a holistic view, revealing how each demographic band has fared in the larger context. This is in contrast to the highlight table, which primarily highlights age-specific rates, and the line graph, which may not capture the intricacies of overlap between age groups. 
                             The stream graph is a masterful storyteller, showcasing not only the individual narratives of each age bracket but also the synergy that exists among them, making it an invaluable tool for comprehending the multifaceted web of employment trends in the United States.
+                        </p>
+                        <hr>
+                        <h2>Trends and Insights</h2>
+                        <p>
+                            From the charts, we can see that the age group of 20-24 consistently has the highest unemployment rates throughout the years. A reason for this is due to the fact that people in this age group are fresh school leavers with little to no work experience.
+                            Especially in times of surplus labour competing for limited amounts of jobs, companies are less likely to hire those without experience, putting this group of people at a major disadvantage. When the economy is bad and companies need to reduce manpower to reduce costs,
+                            this group of people are the first ones to go as well. Due to a young worker likely having less tenure than an adult worker, less company funds invested in them for training purposes and to have a temporary contract, it will be considered cheaper to let the younger worker go in times of economic downturns.
+                            <br><br>
+                            <a href="https://www.cnbc.com/id/40453626">Read More</a>
                         </p>
                             <script src="https://public.tableau.com/javascripts/api/tableau-2.min.js"></script>
                             <script>
@@ -349,25 +603,43 @@
                     </div>
                     <div id="education-content" style="display: none;">
                         <h2>Education</h2>
-                        <p>
+                        <div style="background: rgba(255, 255, 255, 0.2);
+                        padding: 20px;
+                        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); 
+                        border-radius: 10px;
+                        margin-bottom: 30px;">
+                            
                             We are delving into the relationship between an individual's educational history and their experience with unemployment. This investigation seeks 
                             to uncover patterns and trends regarding how various levels of education, from high school diplomas to advanced degrees, influence employment opportunities and job security.
                             Through the insights gained from visualising unemployment data categorized by educational attainments, we aimed to derive a conclusion about the relationship
                             between unemployment rate and one's education attainment.
-                        </p>
+                            <br><br>
+                            In summary, we aim to investigate these questions:
+                            <ul>
+                                <li>How does the unemployment rates for groups holding under different educational qualifications differs?</li>
+                                <li>Why does we observe such trend(s)?</li>
+                            </ul>
+                            
+
+                        </div>
+                        <img src="edu_img.jpg" alt="Homeless people" style="width: 700px; height: 300px;">
+                        <hr>
                         <h3>Unemployment rate by Education Attainment</h3>
                         <div id="edu-attain" style="padding: 2%;"></div>
                         <p>
-                            From the above multi-line chart, we can see that those who owns a certificate less than high school diploma experience
-                            the highest average annual unemployment rate of all time, followed by High School Graduates and those owning a College or Associate's Degree.
-                            
+                            Based on the multi-line chart above, a clear pattern emerges when we examine the historical unemployment rates. Notably, the group with an educational qualification lower than high school diploma experience
+                            the highest average annual unemployment rate of all time, followed by High School Graduates and those owning a College or Associate's Degree. The data reinforces the challenges faced by the group with limited 
+                            formal education, as shown in the chart where they consistently maintained the highest rates of unemployment.
+                            <br><br>
+                            The chart highlights the disparities in unemployment rates based on educational attainment but also emphasizes the importance of education in achieving greater employment stability and economic security. It 
+                            underscores the potential benefits of higher education in mitigating the impact of economic downturns and facilitating career opportunities.
                         </p>
                         <h3>Rate of Change in Unemployment Rate across Years</h3>
                         <div id="edu-roc" style="padding: 2%;"></div>
                         <p>
                             Though we know that people with a certification less than High School Diploma has the highest average annual unemployment rate, we want to know about how the unemployment rate 
-                            varies across the years, did . From the above graph illustrating the rate of changes in average annual unemployment rate, we can see that the width of the area representing people with 
-                            educational attainment of less than High School diploma is 
+                            varies across the years, did . From the above graph illustrating the rate of changes in average annual unemployment rate, we can see that the width of the stream representing people with 
+                            educational attainment of less than High School diploma is consistently the largest proportion. 
                             <br><br>
                             The rate of change is obtained by using the previous year as the basis for calculation to see how much has the unemployment range changes after a year.
                         </p>   
@@ -376,15 +648,25 @@
                         <p>
                             The animated treemap show us the change in average annual unemployment rate in US from 1993 to 2023. The size of the graph changes
                             with the average unemployment rate. While most of the years show relatively small portion, there are years that have a large size that
-                            covers most of the canva, which are 2009, 
-                        </p>    
-                        
+                            covers most of the canva, which are 2009, 2010 and 2020.
+                            <br><br>
+                            The stated years are known to be after major events such as 2008 Financial Crisis and 2019 Covid-19 Pandemic. The major events have led to 
+                            massive layoffs and raised the unemployment rate of the following year(s).
+
+                        </p>
+                        <h2>Trends and Insights</h2>
+                        <p>
+                            From the charts above, we see that the group with the lowest education qualification i.e. individuals holding an educational qualification of Less than High School has the highest unemployment rate and that those holding a Bachelor's Degree have the lowest unemployment rate.
+                            , especially after major events such as 2008 Financial Crisis and 2019 Covid-19 Pandemic when massive layoffs happened and the labor market remained weak. <a href="https://www.bls.gov/opub/mlr/2011/03/art1full.pdf">(Theodossiou & Hipple, 2011)</a> <a href="https://www.bls.gov/opub/mlr/2021/article/unemployment-rises-in-2020-as-the-country-battles-the-covid-19-pandemic.htm#:~:text=A%20decade%2Dlong%20economic%20expansion,people%20from%20looking%20for%20work.">(Smith et al., 2021)</a> 
+                            An article on BLS <a href="https://www.bls.gov/emp/education-pays-handout.pdf">(Click here to read on)</a> observed that many employers value groups with higher education qualifications because they believe that for "Each level of education [that employee] complete may help
+                            [the employee] develop more skills, give ... access to higher paying occupations, and signal that [the employee is] able to follow through on important tasks, such as
+                            planning ahead and meeting deadlines"
+                        </p> 
                             <script src="https://public.tableau.com/javascripts/api/tableau-2.min.js"></script>
                             <script>
-
                                 function initTableauEdu2() {
                                     var containerDiv = document.getElementById("edu-attain");
-                                    var url = "https://public.tableau.com/views/education_overview_dashboard_testing/Line-UnemploymentRatebyEducationattainment";
+                                    var url = "https://public.tableau.com/views/education_overview_dashboard_testing/Line-UnemploymentRatebyEducationattainment?:language=en-GB&publish=yes&:display_count=n&:origin=viz_share_link";
                                     var options = {
                                         hideTabs: true,
                                         width: "100%",

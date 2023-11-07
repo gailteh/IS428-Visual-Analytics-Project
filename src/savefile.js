@@ -90,18 +90,6 @@ function initialize(data) {
         .attr("text-anchor", "middle")
         .attr("fill", "black")
         .attr("font-weight", "bold")
-    
-    // Append labels for the unemployment rates
-    const rateLabels = svg.selectAll(".rateLabel")
-        .data(data.slice(0, visibleRows), d => d.parsedDate)
-        .enter()
-        .append("text")
-        .attr("class", "rateLabel")
-        .attr("x", d => x(d["Unemployment Rate (in percentage)"]) + 5)
-        .attr("y", d => y(d.parsedDate) + y.bandwidth() / 2)
-        .attr("dy", "0.35em")
-        .attr("text-anchor", "start")
-        .text(d => d["Unemployment Rate (in percentage)"]+ '%');
 
     // Initialize scrubber elements
     const scrubberContainer = d3.select("#scrubber");
@@ -137,44 +125,6 @@ function initialize(data) {
             .duration(duration)
             .attr("y", d => y(d.parsedDate) + y.bandwidth() / 2)
             .text(d => dateFormatter(d.parsedDate));
-
-        
-
-        // Bind the new data with the key function
-            const rateLabelsUpdate = svg.selectAll(".rateLabel")
-                .data(newData, d => d.parsedDate);
-
-            rateLabels.data(data.slice(index, index + visibleRows), d => d.parsedDate)
-                .transition()
-                .duration(duration)
-                .attr("x", d => x(d["Unemployment Rate (in percentage)"]) + 5)
-                .attr("y", d => y(d.parsedDate) + y.bandwidth() / 2)
-                .text(d => d["Unemployment Rate (in percentage)"] + '%');    
-
-            // Enter selection: Append new labels
-            const rateLabelsEnter = rateLabelsUpdate.enter()
-                .append("text")
-                .attr("class", "rateLabel")
-                // Set attributes for entering elements here
-                .attr("x", d => x(d["Unemployment Rate (in percentage)"]) + 5)
-                .attr("y", d => y(d.parsedDate) + y.bandwidth() / 2)
-                .attr("dy", "0.35em")
-                .attr("text-anchor", "start");
-
-            // Update selection: Update attributes for existing elements
-            rateLabelsUpdate
-                .merge(rateLabelsEnter) // Combine enter and update selections
-                .transition()
-                .duration(duration)
-                .attr("x", d => x(d["Unemployment Rate (in percentage)"]) + 5)
-                .attr("y", d => y(d.parsedDate) + y.bandwidth() / 2)
-                .text(d => d["Unemployment Rate (in percentage)"] + '%');
-
-            // Exit selection: Remove elements that no longer have data
-            rateLabelsUpdate.exit().remove();    
-        
-
-        
     }
 
     // Now that the scrubber and update functions are set up, we can continue with the rest of the chart.
@@ -182,74 +132,20 @@ function initialize(data) {
     // adjust it to work with the scrubber.
 
     // Function to automatically scroll through the data
-    // Define a variable to keep track of the autoscroll state
-        let isAutoscrolling = false;
-
-        // Define the play/pause button and its event listener
-        const playPauseButton = d3.select("#playPause")
-            .append("button")
-            .text("Play")
-            .on("click", function() {
-                isAutoscrolling = !isAutoscrolling;
-                d3.select(this).text(isAutoscrolling ? "Pause" : "Play"); // Toggle button text
-                if (isAutoscrolling) {
-                    autoScroll();
-                }
-            });
-        // Modify the scrubber's event listener to update the current index and pause autoscrolling when manually adjusted
-        scrubber.on("input", function() {
-            // Update the current index to the new value of the scrubber
-            currentIndex = +this.value;
-
-            // Update the chart to the new index
-            updateChart(currentIndex);
-
-            // Stop autoscrolling when the user manually adjusts the scrubber
-            isAutoscrolling = false;
-            playPauseButton.text("Play"); // Update the button text
-        });
-
-        // Update the playPauseButton's event listener to resume from currentIndex
-        playPauseButton.on("click", function() {
-            // Toggle the autoscrolling state
-            isAutoscrolling = !isAutoscrolling;
-
-            // Update the button text based on the autoscrolling state
-            d3.select(this).text(isAutoscrolling ? "Pause" : "Play");
-
-            // If resuming, start the auto-scroll from the current index
-            if (isAutoscrolling) {
-                autoScroll();
-            }
-        });
     let currentIndex = 0;
-    
-// Modify the autoScroll function
-
-function autoScroll() {
-    if (isAutoscrolling && currentIndex < data.length - visibleRows) {
+    function autoScroll() {
         // Update the scrubber value
         scrubber.node().value = currentIndex;
-
         // Update the chart to the new index
         updateChart(currentIndex);
-
         // Increment the index
-        currentIndex++;
-
-        // If we've reached the end, you can choose to either stop or loop to the beginning
-        if (currentIndex >= data.length - visibleRows) {
-            currentIndex = 0; // Loop to start
-            // isAutoscrolling = false; // Stop autoscrolling
-        }
-
-        // Schedule the next autoScroll if autoscrolling is active
-        if (isAutoscrolling) {
-            setTimeout(autoScroll, 1000); // Continue at the new index after the specified delay
-        }
+        currentIndex = (currentIndex + 1) % (data.length - visibleRows);
+        // Loop the auto-scroll
+        setTimeout(autoScroll, 1000);
     }
-}
 
+    // Start the auto-scroll
+    autoScroll();
 }
 
 // Handle the window resize event
